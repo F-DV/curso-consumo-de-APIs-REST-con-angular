@@ -10,7 +10,7 @@ import {retry} from 'rxjs/operators';
 export class ProductsService {
 
   //URL Base
-  private apiUrl = 'https://young-sands-07814.herokuapp.com/api/products';
+  private apiUrl = '/api/products';
 
   constructor(
     private http: HttpClient //Inyeccion de dependencia
