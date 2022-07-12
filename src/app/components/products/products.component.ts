@@ -16,6 +16,17 @@ export class ProductsComponent implements OnInit {
   total = 0;
   products: Product[] = [];
   showProductDetail = false;  //Pequeño estado para mostrar detalle de 1 producto
+  productChosen: Product = { //Producto elegido para mostrar
+    id: '',
+    price: 0,
+    images: [],
+    title: '',
+    category: {
+      id:'',
+      name:''
+    },
+    description: ''
+  };
 
   constructor(
     private storeService: StoreService,
@@ -43,8 +54,10 @@ export class ProductsComponent implements OnInit {
   onShowDetail(id: string){
     this.productsService.getProduct(id)
     .subscribe(data =>{
-      console.log('Product', data);
+      this.toggleProductDetail(); //Abrimos tambien el ProductDetail
+      this.productChosen = data; //Guardamos los detalle de ese produto en el producto elegido
     })
   }
+
 
 }
