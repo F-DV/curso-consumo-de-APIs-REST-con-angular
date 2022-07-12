@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { createProductDTO, Product } from '../../models/product.model';
+import { CreateProductDTO, Product, UpdateProductDTO } from '../../models/product.model';
 
 import { StoreService } from '../../services/store.service';
 import { ProductsService } from '../../services/products.service';
@@ -59,7 +59,7 @@ export class ProductsComponent implements OnInit {
     })
   }
   createNewProduct(){
-    const product: createProductDTO= {
+    const product: CreateProductDTO= {
       price: 1000,
       images: [''],
       title: 'nuevo producto',
@@ -72,6 +72,19 @@ export class ProductsComponent implements OnInit {
       console.log('data ',data)
       this.products.unshift(data); //Insertamos el nuevo producto en el array
     });
+  }
+  updateProduct(){
+    const changes: UpdateProductDTO = {
+      title: 'change title',
+    }
+    const id = this.productChosen.id;
+    this.productsService.update(id,changes)
+    .subscribe(data => {
+      const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
+      this.products[productIndex ]= data;
+
+      console.log('update',data);
+    })
   }
 
 
