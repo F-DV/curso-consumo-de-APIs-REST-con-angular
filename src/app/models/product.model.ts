@@ -13,4 +13,8 @@ export interface Product { //tipado para el producto
   category: Category;
 }
 
+export interface createProductDTO extends Omit<Product, 'id'| 'category'>{ //tipado para POST DTO
+  categoryId: number;
+}
+
 
