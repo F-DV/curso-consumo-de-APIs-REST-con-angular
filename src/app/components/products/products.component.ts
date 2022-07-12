@@ -18,13 +18,13 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private storeService: StoreService,
-    private productsService: ProductsService
+    private productsService: ProductsService //Inyectamos el servicio para solicitudes HTTP
   ) {
     this.myShoppingCart = this.storeService.getShoppingCart();
   }
 
   ngOnInit(): void {
-    this.productsService.getAllProducts()
+    this.productsService.getAllProducts() //utilizamos el metodo getAll
     .subscribe(data => {
       this.products = data;
     });

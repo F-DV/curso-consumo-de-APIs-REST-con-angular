@@ -1,8 +1,16 @@
-export interface Product {
+export interface Category { //tipado para la cayegoria
+  id: string;
+  name: string;
+
+}
+
+export interface Product { //tipado para el producto
   id: string;
   title: string;
   price: number;
-  image: string;
+  images: string[]; //varias imagenes
   description: string;
-  category: string;
+  category: Category;
 }
+
+
