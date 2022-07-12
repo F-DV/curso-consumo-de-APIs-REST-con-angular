@@ -8,11 +8,18 @@ import { Product } from './../models/product.model';
 })
 export class ProductsService {
 
+  //URL Base
+  private apiUrl = 'https://young-sands-07814.herokuapp.com/api/products';
+
   constructor(
     private http: HttpClient //Inyeccion de dependencia
   ) { }
 
-  getAllProducts() {
-    return this.http.get<Product[]>('https://young-sands-07814.herokuapp.com/api/products');
+  getAllProducts() {//Traemos todos los productos
+    return this.http.get<Product[]>(this.apiUrl);
+  }
+
+  getProduct(id:string){//Traemos 1 solo producto
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 }
