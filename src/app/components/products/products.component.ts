@@ -27,6 +27,9 @@ export class ProductsComponent implements OnInit {
     },
     description: ''
   };
+  //Para paginacion dinamica
+  limit = 10;
+  offset = 0;
 
   constructor(
     private storeService: StoreService,
@@ -36,7 +39,7 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productsService.getAllProducts() //utilizamos el metodo getAll
+    this.productsService.getProductsBypage(10,0) //utilizamos el metodo getAll
     .subscribe(data => {
       this.products = data;
     });
@@ -96,5 +99,14 @@ export class ProductsComponent implements OnInit {
     })
   }
 
+  //Paginacion dinamica
+  loadMore(){
+    this.productsService.getProductsBypage(this.limit, this.offset)
+    .subscribe(data => {
+      this.products = this.products.concat(data);//no sobrescribe ,
+      //this.products = data; //sobrescribe los articulos
+      this.offset += this.limit;
+    })
+  }
 
 }

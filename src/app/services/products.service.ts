@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { CreateProductDTO, Product, UpdateProductDTO } from './../models/product.model';
 
@@ -15,8 +15,22 @@ export class ProductsService {
     private http: HttpClient //Inyeccion de dependencia
   ) { }
 
-  getAllProducts() {//Traemos todos los productos
+  //Paginacion con parametros opcionales
+  getAllProducts(limit?:number,offset?:number) {//Traemos todos los productos
+    let params = new HttpParams();
+
+    if(limit && offset){//Condicional para  validar cuadno lleguen los parametros
+      params = params.set('limit',limit);
+      params = params.set('offset',limit);
+    }
     return this.http.get<Product[]>(this.apiUrl);
+  }
+
+  //Paginacion
+  getProductsBypage(limit:number, offset:number){
+    return this.http.get<Product[]>(`${this.apiUrl}`,{
+      params: {limit,offset}
+    })
   }
 
   getProduct(id:string){//Traemos 1 solo producto
