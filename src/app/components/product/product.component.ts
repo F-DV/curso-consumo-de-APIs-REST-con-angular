@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ta } from 'date-fns/locale';
 
 import { Product } from '../../models/product.model';
 
@@ -18,7 +19,8 @@ export class ProductComponent {
       id:'',
       name:''
     },
-    description: ''
+    description: '',
+
   };
   @Output() addedProduct = new EventEmitter<Product>();
   @Output() showProduct = new EventEmitter<string>();

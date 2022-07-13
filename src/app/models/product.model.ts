@@ -11,6 +11,7 @@ export interface Product { //tipado para el producto
   images: string[]; //varias imagenes
   description: string;
   category: Category;
+  taxes?: number; //atributo opcional
 }
 
 export interface CreateProductDTO extends Omit<Product, 'id'| 'category'>{ //tipado para POST DTO
