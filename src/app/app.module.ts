@@ -13,6 +13,7 @@ import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { HighlightDirective } from './directives/highlight.directive';
 import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';// MODULO PARA SOLICITUDES HTTP
 import { TimeInterceptor } from './interceptors/time.interceptor';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { TimeInterceptor } from './interceptors/time.interceptor';
     SwiperModule
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass:TimeInterceptor, multi:true},
     {provide: HTTP_INTERCEPTORS, useClass:TimeInterceptor, multi:true}
   ],
   bootstrap: [AppComponent]
