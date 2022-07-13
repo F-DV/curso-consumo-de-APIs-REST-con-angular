@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
 import { CreateProductDTO, Product, UpdateProductDTO } from '../../models/product.model';
-
 import { StoreService } from '../../services/store.service';
 import { ProductsService } from '../../services/products.service';
 
@@ -27,9 +25,11 @@ export class ProductsComponent implements OnInit {
     },
     description: ''
   };
+
   //Para paginacion dinamica
   limit = 10;
   offset = 0;
+  statusDetail: 'loading' |'success' | 'error' | 'init' = 'init'; //tipado para manejo de errores
 
   constructor(
     private storeService: StoreService,
@@ -55,10 +55,17 @@ export class ProductsComponent implements OnInit {
   }
 
   onShowDetail(id: string){
+    this.statusDetail = 'loading'; //status cuando se haga la peticion
+
     this.productsService.getProduct(id)
     .subscribe(data =>{
       this.toggleProductDetail(); //Abrimos tambien el ProductDetail
       this.productChosen = data; //Guardamos los detalle de ese produto en el producto elegido
+      this.statusDetail = 'success'; //status si todo sale bien
+
+    },errorMsg => {   //Manejando el error
+      console.log(errorMsg.error.message); //error que nativamenteenvia el backend
+      this.statusDetail = 'error';  //status si hubo un error
     })
   }
   createNewProduct(){
