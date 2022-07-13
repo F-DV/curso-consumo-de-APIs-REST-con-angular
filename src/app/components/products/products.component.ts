@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CreateProductDTO, Product, UpdateProductDTO } from '../../models/product.model';
 import { StoreService } from '../../services/store.service';
 import { ProductsService } from '../../services/products.service';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-products',
@@ -83,6 +84,40 @@ export class ProductsComponent implements OnInit {
       this.products.unshift(data); //Insertamos el nuevo producto en el array
     });
   }
+
+  readAnUpdate(id: string){
+
+    /* Forma de Promesas- se utiliza sin el patron observable
+    doSomething()
+    .then()
+    .then()
+    */
+
+    /*Forma en CALLBACKS
+    this.productsService.getProduct(id)
+    .subscribe(data => {
+      const product = data;
+      this.productsService.update(product.id,{title:'change'})
+      .subscribe(rtaUpdate =>{
+        this.productsService.update(product.id, {title: 'change'})
+        console.log(rtaUpdate);
+      })
+    })
+    */
+
+    //Forma ideal para evitar los Callbacks y utilizando el patro OBSERVABLE
+
+    this.productsService.getProduct(id)
+    .pipe(
+      switchMap((product) => this.productsService.update(product.id, {title: 'change'})),
+      switchMap((product) => this.productsService.update(product.id, {title: 'change'})),
+      switchMap((product) => this.productsService.update(product.id, {title: 'change'})),
+    )
+    .subscribe(data =>{
+
+    });
+  }
+
   updateProduct(){
     const changes: UpdateProductDTO = {
       title: 'change title',
