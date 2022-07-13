@@ -2,11 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import {tap,map} from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+
+interface File {
+  originalname:string;
+  filename:string;
+  location:string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilesService {
+
+  //URL Base
+  private apiUrl = `${environment.API_URL}/api/files`;
 
   constructor(
     private http: HttpClient //Inyeccion de dependencia
@@ -21,5 +31,18 @@ export class FilesService {
       }),
       map(() => true)
     )
+  }
+
+  upLoadFile(file: Blob){
+
+    const dto = new FormData();
+    dto.append('file', file);
+    return this.http.post<File>(`${this.apiUrl}/upload`,dto, {
+
+      /*ALGUNOS BACKENDS NECESITAN ESTA PARTE.DEPENDE DEL BACKEND
+      headers: {
+        'Content-type': "multipart/form-data"
+      }*/
+    })
   }
 }

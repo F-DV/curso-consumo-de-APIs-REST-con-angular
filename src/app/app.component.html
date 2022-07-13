@@ -5,6 +5,13 @@
 <p>
   <button (click)="downLoadPdf()" >Descargar PDF</button>
 </p>
+<p>
+  <input type="file" (change)="upload($event)">
+  <img *ngIf="imgRta" [src]="imgRta" alt="" />
+</p>
+
+
+
 <app-products></app-products>
 <!-- <p><input type="text" [(ngModel)]="imgParent" /></p>
 <button (click)="toggleImg()">Toggle Img</button>

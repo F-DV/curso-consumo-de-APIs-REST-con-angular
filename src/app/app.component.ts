@@ -9,10 +9,12 @@ import { UsersService } from './services/users.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent {
   imgParent = '';
   showImg = true;
   token = '';
+  imgRta = '';
 
   constructor(
     private authService: AuthService,
@@ -58,5 +60,16 @@ export class AppComponent {
       'https://young-sands-07814.herokuapp.com/api/files/dummy.pdf',
       'application/pdf')
       .subscribe()
+  }
+
+  onUpLoad(event: Event){
+    const element = event.target as HTMLInputElement;
+    const file = element.files?.item(0);
+    if(file){
+      this.fileService.upLoadFile(file)
+      .subscribe(rta =>{
+        this.imgRta = rta.location;
+      });
+    }
   }
 }
