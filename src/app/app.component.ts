@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Product } from './models/product.model';
 import { AuthService } from './services/auth.service';
+import { FilesService } from './services/files.service';
 import { UsersService } from './services/users.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class AppComponent {
 
   constructor(
     private authService: AuthService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private fileService: FilesService
     ){}
 
   onLoaded(img: string) {
@@ -48,5 +50,13 @@ export class AppComponent {
     .subscribe(profile => {
       console.log(profile);
     });
+  }
+
+  downLoadPdf(){
+    this.fileService.getFile(
+      'my-pdf',
+      'https://young-sands-07814.herokuapp.com/api/files/dummy.pdf',
+      'application/pdf')
+      .subscribe()
   }
 }
